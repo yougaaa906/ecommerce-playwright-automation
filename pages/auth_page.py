@@ -8,7 +8,7 @@ import string
 class AuthPage(BasePage):
     logger = logging.getLogger(__name__)
 
-    ACCOUNT = "._accountTrigger_1t05m_113"
+    ACCOUNT = "[aria-label='Account menu']"
     SIGN_IN_BTN = "[data-testid='account-menu-login']"
     CREATE_ACCOUNT_BTN = "[data-testid='account-menu-register']"
 

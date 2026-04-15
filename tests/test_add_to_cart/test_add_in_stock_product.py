@@ -4,12 +4,12 @@ from pages.product_detail_page import ProductDetailPage
 logger = logging.getLogger(__name__)
 
 
-def test_add_to_cart_and_verify_cart_details(page, navigate_to_in_stock_product):
+def test_add_to_cart_and_verify_cart_details(base_page, navigate_to_in_stock_product):
     """Verify cart count, item info and price calculation after adding product"""
     logger.info("Starting test: Add to cart and verify all cart details")
 
     # Add product to cart
-    product_detail = ProductDetailPage(page)
+    product_detail = ProductDetailPage(base_page)
     product_info = product_detail.add_to_cart()
 
     # Verify cart badge count

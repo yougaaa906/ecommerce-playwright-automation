@@ -20,7 +20,7 @@ def setup_logging():
 
     file_handler = logging.FileHandler(log_file, encoding="utf-8")
     stream_handler = logging.StreamHandler()
-    formatter = logging.Formatter("%(asctime)s - %levelname)s - %(message)s")
+    formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 
     file_handler.setFormatter(formatter)
     stream_handler.setFormatter(formatter)

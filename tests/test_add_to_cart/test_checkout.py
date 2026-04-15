@@ -7,8 +7,8 @@ logger = logging.getLogger(__name__)
 
 def test_complete_checkout_flow_validation(logged_in_page, navigate_to_checkout_page):
 
-    page = logged_in_page
-    checkout_page = CheckoutPage(page)
+    base_page = logged_in_page
+    checkout_page = CheckoutPage(base_page)
 
     summary = checkout_page.get_order_summary()
     subtotal = float(summary["subtotal"].replace("$", ""))

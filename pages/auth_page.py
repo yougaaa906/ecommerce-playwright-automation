@@ -12,17 +12,17 @@ class AuthPage(BasePage):
     SIGN_IN_BTN = "[data-testid='account-menu-login']"
     CREATE_ACCOUNT_BTN = "[data-testid='account-menu-register']"
 
-    # Sign in
+    # Sign in selectors
     EMAIL_FIELD = "[data-testid='login-email']"
     PWD_FIELD = "[data-testid='login-password']"
     LOGIN_SUBMIT_BTN = "[data-testid='login-submit']"
     ERROR_USERNAME_TIP = "[data-testid='login-email-error']"
     ERROR_PWD_TIP = "[data-testid='login-error']"
 
-    # Log out
+    # Logout selector
     LOGOUT_BTN = "[data-testid='account-menu-logout']"
 
-    # Create account
+    # Create account selectors
     FULL_NAME_FIELD = "[data-testid='register-name']"
     REG_EMAIL_FIELD = "[data-testid='register-email']"
     REG_PWD_FIELD = "[data-testid='register-password']"
@@ -30,10 +30,15 @@ class AuthPage(BasePage):
     REG_SUBMIT_BTN = "[data-testid='register-submit']"
     REG_CONFIRM_ERROR = "[data-testid='register-confirm-error']"
 
+    # Stable click for CI env to avoid intercept/timeout
+    def click_account_button_safe(self):
+        self.page.wait_for_selector(self.ACCOUNT, state="visible", timeout=15000)
+        self.page.click(self.ACCOUNT, force=True)
+
     # Login with valid credentials
     def login_successed(self, username=USERNAME, password=PASSWORD):
         try:
-            self.elem_click(self.ACCOUNT)
+            self.click_account_button_safe()
             self.elem_click(self.SIGN_IN_BTN)
             self.elem_input(self.EMAIL_FIELD, username)
             self.elem_input(self.PWD_FIELD, password)
@@ -44,10 +49,10 @@ class AuthPage(BasePage):
             self.logger.error(f"Login failed with valid credentials: {str(e)}")
             raise e
 
-    # Login with invalid username, valid password
+    # Login with invalid username
     def login_invalid_username(self, username="test", password=PASSWORD):
         try:
-            self.elem_click(self.ACCOUNT)
+            self.click_account_button_safe()
             self.elem_click(self.SIGN_IN_BTN)
             self.elem_input(self.EMAIL_FIELD, username)
             self.elem_input(self.PWD_FIELD, password)
@@ -58,10 +63,10 @@ class AuthPage(BasePage):
             self.logger.error(f"Unexpected successful login with invalid username: {str(e)}")
             raise e
 
-    # Login with valid username, invalid password
+    # Login with invalid password
     def login_invalid_password(self, username=USERNAME, password="123"):
         try:
-            self.elem_click(self.ACCOUNT)
+            self.click_account_button_safe()
             self.elem_click(self.SIGN_IN_BTN)
             self.elem_input(self.EMAIL_FIELD, username)
             self.elem_input(self.PWD_FIELD, password)
@@ -72,10 +77,10 @@ class AuthPage(BasePage):
             self.logger.error(f"Unexpected successful login with invalid password: {str(e)}")
             raise e
 
-    # Logout
+    # Logout current user
     def logout(self):
         try:
-            self.elem_click(self.ACCOUNT)
+            self.click_account_button_safe()
             self.elem_click(self.LOGOUT_BTN)
             self.logger.info("User logged out successfully")
             return self.get_element_text(self.ACCOUNT)
@@ -83,14 +88,13 @@ class AuthPage(BasePage):
             self.logger.error(f"Logout failed: {str(e)}")
             raise e
 
-    # Create new account with valid information
+    # Create new account with random email to avoid flakiness
     def create_account(self, fullname=FULL_NAME, reg_pwd=REG_PWD, confirm_pwd=CONFIRM_PWD):
         try:
-            # Generate unique random email to avoid flaky tests
             random_str = ''.join(random.choices(string.ascii_lowercase, k=8))
             reg_email = f"test_{random_str}@icloud.com"
 
-            self.elem_click(self.ACCOUNT)
+            self.click_account_button_safe()
             self.elem_click(self.CREATE_ACCOUNT_BTN)
             self.elem_input(self.FULL_NAME_FIELD, fullname)
             self.elem_input(self.REG_EMAIL_FIELD, reg_email)
@@ -108,11 +112,10 @@ class AuthPage(BasePage):
     # Create account with mismatched password confirmation
     def create_account_error_confirm_pwd(self, fullname=FULL_NAME, reg_pwd=REG_PWD, confirm_pwd="123"):
         try:
-            # Generate unique random email for each test run
             random_str = ''.join(random.choices(string.ascii_lowercase, k=8))
             reg_email = f"test_{random_str}@icloud.com"
 
-            self.elem_click(self.ACCOUNT)
+            self.click_account_button_safe()
             self.elem_click(self.CREATE_ACCOUNT_BTN)
             self.elem_input(self.FULL_NAME_FIELD, fullname)
             self.elem_input(self.REG_EMAIL_FIELD, reg_email)

@@ -45,14 +45,3 @@ The report will be saved to reports/report.html, which can be opened directly in
 
 ---
 
-## Project Structure
-
-ecommerce-playwright-automation/  
-├── .github/workflows/  
-├── pages/  
-├── tests/  
-├── config/  
-├── reports/  
-├── requirements.txt  
-├── pytest.ini  
-└── README.md  

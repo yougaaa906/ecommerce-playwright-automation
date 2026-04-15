@@ -2,7 +2,7 @@ import pytest
 import os
 import logging
 from datetime import datetime
-from playwright.sync_api import Page, Playwright
+from playwright.sync_api import Page
 from utils.login_utils import login
 from pages.home_page import HomePage
 
@@ -15,13 +15,12 @@ def setup_logging():
 
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.INFO)
-
     if root_logger.hasHandlers():
         root_logger.handlers.clear()
 
     file_handler = logging.FileHandler(log_file, encoding="utf-8")
     stream_handler = logging.StreamHandler()
-    formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+    formatter = logging.Formatter("%(asctime)s - %levelname)s - %(message)s")
 
     file_handler.setFormatter(formatter)
     stream_handler.setFormatter(formatter)
@@ -33,21 +32,16 @@ def setup_logging():
 logger = setup_logging()
 
 @pytest.fixture(scope="function")
-def base_page(playwright: Playwright):
-    browser = playwright.chromium.launch(headless=True)
-    context = browser.new_context()
-    page = context.new_page()
+def base_page(page: Page):
     page.goto("http://localhost:5173")
     yield page
-    context.close()
-    browser.close()
 
 @pytest.fixture
 def logged_in_page(base_page: Page):
     login(base_page)
     yield base_page
 
-@pytest.fixture(scope="function", autouse=True)
+@pytest.fixture(scope="function")
 def handle_cookie_consent(base_page, request):
     if "cookie_test" in request.keywords:
         yield

@@ -41,7 +41,7 @@ def logged_in_page(base_page: Page):
     login(base_page)
     yield base_page
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="function", autouse=True)
 def handle_cookie_consent(base_page, request):
     if "cookie_test" in request.keywords:
         yield

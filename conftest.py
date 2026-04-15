@@ -2,7 +2,7 @@ import pytest
 import os
 import logging
 from datetime import datetime
-from playwright.sync_api import Page
+from playwright.sync_api import Page, Playwright
 from utils.login_utils import login
 from pages.home_page import HomePage
 
@@ -33,23 +33,28 @@ def setup_logging():
 logger = setup_logging()
 
 @pytest.fixture(scope="function")
-def page(page: Page):
+def base_page(playwright: Playwright):
+    browser = playwright.chromium.launch(headless=True)
+    context = browser.new_context()
+    page = context.new_page()
     page.goto("http://localhost:5173")
     yield page
+    context.close()
+    browser.close()
 
 @pytest.fixture
-def logged_in_page(page: Page):
-    login(page)
-    yield page
+def logged_in_page(base_page: Page):
+    login(base_page)
+    yield base_page
 
 @pytest.fixture(scope="function", autouse=True)
-def handle_cookie_consent(page, request):
+def handle_cookie_consent(base_page, request):
     if "cookie_test" in request.keywords:
         yield
         return
 
     try:
-        home_page = HomePage(page)
+        home_page = HomePage(base_page)
         if home_page.is_cookie_banner_visible():
             home_page.click_accept_all_cookies()
             logger.info("Auto-accepted cookie consent banner")
@@ -67,7 +72,8 @@ def pytest_runtest_makereport(item, call):
         if rep.failed:
             logger.error(f"FAILED: {item.name}")
             try:
-                page = item.funcargs.get("page") or item.funcargs.get("logged_in_page")
+                page = item.funcargs.get("base_page") or item.funcargs.get("logged_in_page")
+                os.makedirs("screenshots", exist_ok=True)
                 page.screenshot(path=f"screenshots/fail_{item.name}.png", full_page=True)
             except:
                 pass

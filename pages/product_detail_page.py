@@ -70,7 +70,7 @@ class ProductDetailPage(BasePage):
         Returns: dictionary with cart item name, subtotal, size, total price
         """
         try:
-            self.elem_click(self.CART_BTN)
+            self.page.click(self.CART_BTN, force=True)
             self.wait_elem_visible(self.CART_PRODUCT_NAME)
 
             # Return cart information in a dictionary
@@ -103,7 +103,7 @@ class ProductDetailPage(BasePage):
         """Clear cart items only if cart is not empty"""
         try:
             # Open cart drawer
-            self.elem_click(self.CART_BTN)
+            self.page.click(self.CART_BTN, force=True)
             self.page.wait_for_timeout(1000)
 
             # Check if cart is already empty

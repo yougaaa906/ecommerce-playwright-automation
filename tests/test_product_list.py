@@ -9,8 +9,8 @@ logger = logging.getLogger(__name__)
 def test_filter_sort_search_flow(navigate_to_product_list):
     """Test filter, sort and search with full product name validation"""
 
-    page = navigate_to_product_list
-    product_list = ProductListPage(page)
+    base_page = navigate_to_product_list
+    product_list = ProductListPage(base_page)
 
     # Filter
     product_list.filter_by_mens_apparel()

@@ -1,5 +1,6 @@
 import logging
 from pages.product_detail_page import ProductDetailPage
+import pytest
 
 logger = logging.getLogger(__name__)
 

@@ -11,18 +11,18 @@ E2E automation test project for e-commerce website, built with Python + Playwrig
 - Git (optional, for version control)
 
 ### 2. Install Dependencies
-pip install pytest pytest-html playwright
-playwright install --with-deps chromium
+- pip install pytest pytest-html playwright
+- playwright install --with-deps chromium
 
 ### 3. Run Tests
-pytest -v
-pytest --html=reports/report.html --self-contained-html -v
+- pytest -v
+- pytest --html=reports/report.html --self-contained-html -v
 
-The report will be saved to reports/report.html, which can be opened directly in any browser.
+- The report will be saved to reports/report.html, which can be opened directly in any browser.
 
 ### 4. GitHub Actions CI/CD
-This project is integrated with GitHub Actions. The test workflow will automatically trigger on every push or pull request to the main branch.
-You can download the report from the Artifacts section in the GitHub Actions workflow run page.
+- This project is integrated with GitHub Actions. The test workflow will automatically trigger on every push or pull request to the main branch.
+- You can download the report from the Artifacts section in the GitHub Actions workflow run page.
 
 ---
 

@@ -3,11 +3,11 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def test_browsing_homepage_load_and_product_listing(page):
+def test_browsing_homepage_load_and_product_listing(base_page):
     """Test to verify homepage loads and product listing works correctly"""
     logger.info("=== Starting Homepage Browsing Test ===")
 
-    home_page = HomePage(page)
+    home_page = HomePage(base_page)
 
     # Verify homepage heading text
     actual_heading = home_page.verify_homepage_loaded()

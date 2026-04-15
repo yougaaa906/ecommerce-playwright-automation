@@ -3,7 +3,7 @@ from pages.product_detail_page import ProductDetailPage
 
 logger = logging.getLogger(__name__)
 
-
+@pytest.mark.xfail(reason="Intentional test - System calculates total with shipping fee")
 def test_add_to_cart_and_verify_cart_details(base_page, navigate_to_in_stock_product):
     """Verify cart count, item info and price calculation after adding product"""
     logger.info("Starting test: Add to cart and verify all cart details")

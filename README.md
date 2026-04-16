@@ -77,3 +77,17 @@ Key findings include:
 ## 📌 Notes for Reviewers
 All tests run **automatically in CI** — no local installation required.
 Please check the live report link above for the latest test results.
+
+## Setup Instructions
+
+1. Clone the repository:
+git clone (https://github.com/yougaaa906/ecommerce-playwright-automation)
+
+2. Install dependencies:
+pip install -r requirements.txt
+
+3. Run the test suite:
+pytest -v
+
+4. View test report:
+Open report/index.html in your browser

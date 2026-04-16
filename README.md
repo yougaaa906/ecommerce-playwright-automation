@@ -45,7 +45,7 @@ You can view the latest test result without local setup.
 - ✅ Cookie consent banner display & handling
 - ✅ Global cookie auto-accept for all tests
 
-📄 **Full Test Case Document**: [View Detailed Test Cases](sslocal://flow/file_open?url=.%2Fdocs%2Ftest_cases.md&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
+📄 **Full Test Case Document**: https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Fyougaaa906%2Fecommerce-playwright-automation%2Frefs%2Fheads%2Fmain%2Ftest_docs%2FE-commerce%2520Website%2520Test%2520Cases.xlsx&wdOrigin=BROWSELINK
 
 ---
 
@@ -65,7 +65,7 @@ You can view the latest test result without local setup.
 During system familiarization, I identified several functional & UI defects in the e-commerce system,
 documented with detailed steps, severity, and reproduction methods.
 
-📋 **Full Defect Report**: [View Defect List](sslocal://flow/file_open?url=.%2Fdocs%2Fdefect_report.md&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
+📋 **Full Defect Report**: https://github.com/yougaaa906/ecommerce-playwright-automation/blob/main/test_docs/E-commerce%20Website%20Test%20Bug%20Report.pdf
 
 Key findings include:
 - Price calculation inconsistency between cart and checkout (the basis for the XFAIL test case)

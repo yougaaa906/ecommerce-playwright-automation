@@ -5,9 +5,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-# Force the actions runner to use Node 24 to align with 2026 standards
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  # This is the "Magic Switch" to silence the Node 20 deprecation nagging
+  ACTIONS_NODE_JS_20_DEPRECATION_WARNING: false 
 
 permissions:
   contents: read
@@ -61,7 +62,9 @@ jobs:
 
       - name: Upload temporary artifacts
         if: always()
-        uses: actions/upload-artifact@v5
+        # Ensure using the latest v5 or v6 available
+        uses: actions/upload-artifact@v6
+        continue-on-error: true # Safety net
         with:
           name: reports-${{ matrix.browser }}
           path: reports/
@@ -74,7 +77,7 @@ jobs:
     environment: github-pages
     steps:
       - name: Download all artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           path: all-reports
           pattern: reports-*

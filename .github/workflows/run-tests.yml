@@ -5,6 +5,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+# Force the actions runner to use Node 24 early
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: read
   pages: write
@@ -20,15 +24,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # Note: If v5 is out, use v5
 
       - name: Clone frontend e-commerce project
         run: git clone https://github.com/secureprivacy/example-e-commerce-website.git frontend
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4 
         with:
-          node-version: 20
+          node-version: 24 # Update this from 20 to 24
 
       - name: Install frontend dependencies
         run: cd frontend && npm install
@@ -42,9 +46,9 @@ jobs:
         run: sleep 15
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5 # Note: If v6 is out, use v6
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       - name: Install test dependencies
         run: |
@@ -57,7 +61,7 @@ jobs:
 
       - name: Upload temporary artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4 
         with:
           name: reports-${{ matrix.browser }}
           path: reports/

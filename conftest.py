@@ -10,7 +10,7 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 from utils.login_utils import login
 from pages.home_page import HomePage
-from utils import config
+import config.config as config
 
 def setup_logging():
     log_dir = "logs"

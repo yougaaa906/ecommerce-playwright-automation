@@ -5,6 +5,7 @@ from datetime import datetime
 from playwright.sync_api import Page
 from utils.login_utils import login
 from pages.home_page import HomePage
+from utils import config
 
 def setup_logging():
     log_dir = "logs"
@@ -33,7 +34,8 @@ logger = setup_logging()
 
 @pytest.fixture(scope="function")
 def base_page(page: Page):
-    page.goto("http://localhost:5173")
+    logger.info(f"Navigating to: {config.TEST_URL}")
+    page.goto(config.TEST_URL)
     yield page
 
 @pytest.fixture
@@ -67,9 +69,13 @@ def pytest_runtest_makereport(item, call):
             logger.error(f"FAILED: {item.name}")
             try:
                 page = item.funcargs.get("base_page") or item.funcargs.get("logged_in_page")
-                os.makedirs("screenshots", exist_ok=True)
-                page.screenshot(path=f"screenshots/fail_{item.name}.png", full_page=True)
-            except:
-                pass
+                screenshot_dir = "reports/screenshots"
+                if not os.path.exists(screenshot_dir):
+                    os.makedirs(screenshot_dir)
+                
+                page.screenshot(path=f"{screenshot_dir}/fail_{item.name}.png", full_page=True)
+                logger.info(f"Saved screenshot for failure: {item.name}")
+            except Exception as e:
+                logger.error(f"Could not take screenshot: {e}")
         else:
             logger.info(f"PASSED: {item.name}")

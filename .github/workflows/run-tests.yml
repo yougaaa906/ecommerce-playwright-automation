@@ -5,7 +5,7 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-# Force the actions runner to use Node 24 early
+# Force the actions runner to use Node 24 to align with 2026 standards
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -24,15 +24,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Note: If v5 is out, use v5
+        uses: actions/checkout@v5 
 
       - name: Clone frontend e-commerce project
         run: git clone https://github.com/secureprivacy/example-e-commerce-website.git frontend
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4 
+        uses: actions/setup-node@v5
         with:
-          node-version: 24 # Update this from 20 to 24
+          node-version: 24
 
       - name: Install frontend dependencies
         run: cd frontend && npm install
@@ -46,7 +46,7 @@ jobs:
         run: sleep 15
 
       - name: Setup Python
-        uses: actions/setup-python@v5 # Note: If v6 is out, use v6
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
@@ -61,7 +61,7 @@ jobs:
 
       - name: Upload temporary artifacts
         if: always()
-        uses: actions/upload-artifact@v4 
+        uses: actions/upload-artifact@v5
         with:
           name: reports-${{ matrix.browser }}
           path: reports/
@@ -74,7 +74,7 @@ jobs:
     environment: github-pages
     steps:
       - name: Download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           path: all-reports
           pattern: reports-*
@@ -86,4 +86,4 @@ jobs:
           path: all-reports
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

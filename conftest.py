@@ -1,8 +1,13 @@
 import pytest
 import os
+import sys  
 import logging
 from datetime import datetime
 from playwright.sync_api import Page
+
+# CRITICAL: Add path BEFORE importing local modules
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+
 from utils.login_utils import login
 from pages.home_page import HomePage
 from utils import config
